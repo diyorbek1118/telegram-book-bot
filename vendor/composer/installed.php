@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'diyor/telegram-book-bot',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'bff28d62021cd5f5502f258955e3c5a376a13f22',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'diyor/telegram-book-bot' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'bff28d62021cd5f5502f258955e3c5a376a13f22',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
