@@ -3,8 +3,9 @@
     "description": "Telegram ebook bot written in plain PHP",
     "type": "project",
     "require": {
-    "php": "^7.4 || ^8.1",
+    "php": "^8.2",
     "irazasyed/telegram-bot-sdk": "^3.0"
+
 },
     "autoload": {
         "psr-4": {

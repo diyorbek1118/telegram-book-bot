@@ -3,7 +3,7 @@
         'name' => 'diyor/telegram-book-bot',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'bff28d62021cd5f5502f258955e3c5a376a13f22',
+        'reference' => '53214eac3b0a74900fcc68a6d8ac3c6a8df2245d',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'diyor/telegram-book-bot' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'bff28d62021cd5f5502f258955e3c5a376a13f22',
+            'reference' => '53214eac3b0a74900fcc68a6d8ac3c6a8df2245d',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
