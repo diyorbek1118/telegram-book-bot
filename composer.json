@@ -9,7 +9,10 @@
 },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Core\\": "src/Core/",
+            "Admin\\": "src/Admin/",
+            "User\\": "src/User/",
+            "Services\\": "src/Services/"
         }
     }
 }

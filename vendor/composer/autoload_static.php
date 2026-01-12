@@ -28,6 +28,10 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
         array (
             'voku\\' => 5,
         ),
+        'U' => 
+        array (
+            'User\\' => 5,
+        ),
         'T' => 
         array (
             'Telegram\\Bot\\' => 13,
@@ -41,6 +45,7 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
             'Symfony\\Contracts\\Translation\\' => 30,
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\Clock\\' => 24,
+            'Services\\' => 9,
         ),
         'P' => 
         array (
@@ -72,12 +77,13 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
         ),
         'C' => 
         array (
+            'Core\\' => 5,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
         'A' => 
         array (
-            'App\\' => 4,
+            'Admin\\' => 6,
         ),
     );
 
@@ -85,6 +91,10 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+        ),
+        'User\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/User',
         ),
         'Telegram\\Bot\\' => 
         array (
@@ -117,6 +127,10 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
         'Symfony\\Component\\Clock\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/clock',
+        ),
+        'Services\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Services',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -175,6 +189,10 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/src',
         ),
+        'Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Core',
+        ),
         'Carbon\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -183,9 +201,9 @@ class ComposerStaticInit847dce49e3595a4b387339d10ef63596
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
-        'App\\' => 
+        'Admin\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/src/Admin',
         ),
     );
 
