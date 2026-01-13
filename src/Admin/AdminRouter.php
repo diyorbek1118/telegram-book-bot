@@ -1,58 +1,42 @@
 <?php
+
 namespace Admin;
 
-use Admin\Menus\AdminMenu;
-use Admin\Handlers\BookUploadHandler;
-use Admin\Handlers\BookListHandler;
-use Admin\States\AdminState;
+require_once __DIR__ . '/Menus/AdminMenu.php';
 
 class AdminRouter
 {
-    public static function handleMessage($context): void
+    public static function handleMessage($telegram, $message): void
     {
-        $text = $context->message['text'] ?? '';
-        
-        // Agar admin state'da bo'lsa (kitob yuklayotgan bo'lsa)
-        $state = AdminState::get($context->chatId);
-        if ($state) {
-            BookUploadHandler::handleState($context);
-            return;
-        }
+        $chatId = $message->getChat()->getId();
+        $text   = $message->getText() ?? '';
 
-        // Oddiy komandalar
-        if ($text === '/admin' || $text === '/start') {
-            $context->telegram->sendMessage([
-                'chat_id' => $context->chatId,
-                'text' => '👑 Admin panel',
-                'reply_markup' => AdminMenu::main()
+        if ($text === '/start') {
+            $telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => "👮 Admin panel",
+                'reply_markup' => Menus\AdminMenu::main()
             ]);
         }
     }
 
-    public static function handleCallback($context): void
+    public static function handleCallback($telegram, $callback): void
     {
-        $data = $context->callbackQuery['data'] ?? '';
+        $chatId = $callback->getMessage()->getChat()->getId();
+        $data   = $callback->getData();
 
-        switch ($data) {
-            case 'admin_upload':
-                BookUploadHandler::start($context);
-                break;
-
-            case 'admin_books':
-                BookListHandler::show($context);
-                break;
-
-            default:
-                // Kitob o'chirish: delete_book_123
-                if (strpos($data, 'delete_book_') === 0) {
-                    $bookId = (int)str_replace('delete_book_', '', $data);
-                    BookListHandler::delete($context, $bookId);
-                }
-                break;
+        if ($data === 'admin_upload') {
+            $telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => '📤 Kitob yuklash (keyin qilinadi)'
+            ]);
         }
 
-        $context->telegram->answerCallbackQuery([
-            'callback_query_id' => $context->callbackQuery['id']
-        ]);
+        if ($data === 'admin_books') {
+            $telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => '📚 Kitoblar ro‘yxati (keyin qilinadi)'
+            ]);
+        }
     }
 }

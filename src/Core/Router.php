@@ -1,39 +1,45 @@
 <?php
+
 namespace Core;
 
 use Telegram\Bot\Api;
-use Admin\AdminRouter;
-use User\UserRouter;
+
+require_once __DIR__ . '/../Admin/AdminRouter.php';
+require_once __DIR__ . '/../User/UserRouter.php';
 
 class Router
 {
     private Api $telegram;
+    private array $config;
 
-    public function __construct(Api $telegram)
+    public function __construct(Api $telegram, array $config)
     {
         $this->telegram = $telegram;
+        $this->config   = $config;
     }
 
     public function handle($update): void
     {
-        // Context yaratish
-        $context = new Context($update, $this->telegram);
+        $message  = $update->getMessage();
+        $callback = $update->getCallbackQuery();
 
-        // Message handler
-        if (isset($update['message'])) {
-            if (isAdmin($context->userId)) {
-                AdminRouter::handleMessage($context);
+        if ($message) {
+            $chatId = $message->getChat()->getId();
+
+            if (isAdmin($chatId, $this->config['admins'])) {
+                \Admin\AdminRouter::handleMessage($this->telegram, $message);
             } else {
-                UserRouter::handleMessage($context);
+                \User\UserRouter::handleMessage($this->telegram, $message);
             }
         }
 
-        // Callback query handler
-        if (isset($update['callback_query'])) {
-            if (isAdmin($context->userId)) {
-                AdminRouter::handleCallback($context);
+        if ($callback) {
+            $chatId = $callback->getMessage()->getChat()->getId();
+
+            if (isAdmin($chatId, $this->config['admins'])) {
+                \Admin\AdminRouter::handleCallback($this->telegram, $callback);
             } else {
-                UserRouter::handleCallback($context);
+                \User\UserRouter::handleCallback($this->telegram, $callback);
             }
         }
     }
