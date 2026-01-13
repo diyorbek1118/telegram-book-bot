@@ -1,0 +1,47 @@
+# ==========================
+# OS fayllari
+# ==========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================
+# PHP cache va log
+# ==========================
+/vendor/
+/node_modules/
+*.log
+*.cache
+*.tmp
+
+# ==========================
+# Composer fayllari
+# ==========================
+composer.lock
+composer.phar
+
+# ==========================
+# Laravel / Framework fayllari (agar keyinchalik Laravel ishlatilsa)
+# ==========================
+/.env
+/storage/
+/bootstrap/cache/
+
+# ==========================
+# IDE / Editor fayllari
+# ==========================
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.vscode/
+
+# ==========================
+# Telegram bot fayllari
+# ==========================
+/config/database.php   # agar parol kirsa
+/public/uploads/       # foydalanuvchi fayllari
+/public/cache/
+
+# ==========================
+# OS-specific
+# ============
