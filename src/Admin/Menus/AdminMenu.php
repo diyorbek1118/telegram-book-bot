@@ -10,17 +10,17 @@ class AdminMenu
     {
         return Keyboard::make()
             ->inline()
-            ->row(
+            ->row([
                 Keyboard::inlineButton([
                     'text' => '📤 Kitob yuklash',
                     'callback_data' => 'admin_upload'
                 ])
-            )
-            ->row(
+            ])
+            ->row([
                 Keyboard::inlineButton([
-                    'text' => '📚 Kitoblar ro‘yxati',
+                    'text' => '📚 Kitoblar soni',
                     'callback_data' => 'admin_books'
                 ])
-            );
+            ]);
     }
 }

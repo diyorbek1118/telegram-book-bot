@@ -2,41 +2,97 @@
 
 namespace Admin;
 
-require_once __DIR__ . '/Menus/AdminMenu.php';
+use User\UserModel;
+use Admin\AdminStateModel;
+use Admin\Menus\AdminMenu;
 
 class AdminRouter
 {
-    public static function handleMessage($telegram, $message): void
+    /**
+     * /start bosilganda admin panel
+     */
+    public static function start($telegram, $chatId)
     {
-        $chatId = $message->getChat()->getId();
-        $text   = $message->getText() ?? '';
-
-        if ($text === '/start') {
-            $telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => "👮 Admin panel",
-                'reply_markup' => Menus\AdminMenu::main()
-            ]);
-        }
+        $telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => "👮 Admin panelga xush kelibsiz",
+            'reply_markup' => AdminMenu::main()
+        ]);
     }
 
-    public static function handleCallback($telegram, $callback): void
+    /**
+     * Admin message handler
+     */
+    public static function handle($telegram, $chatId, $text = null, $message = null)
     {
-        $chatId = $callback->getMessage()->getChat()->getId();
-        $data   = $callback->getData();
+        $state = AdminStateModel::get($chatId);
 
-        if ($data === 'admin_upload') {
+        /* ===============================
+           ADMIN BALANCE TOP-UP FLOW
+        =============================== */
+        if ($state && $state['step'] === 'waiting_top_up_amount') {
+
+            // Kiritilgan summa tekshiruvi
+            if (!is_numeric($text) || (int)$text <= 0) {
+                $telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => "❌ Iltimos, faqat musbat raqam kiriting.\nMasalan: 50000"
+                ]);
+                return;
+            }
+
+            $amount = (int)$text;
+
+            // user_id temp_data ichidan olinadi
+            $userTelegramId = $state['temp_data']['user_id'] ?? null;
+
+            if (!$userTelegramId) {
+                $telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => "❌ Xatolik: foydalanuvchi aniqlanmadi. Qaytadan urinib ko‘ring."
+                ]);
+                AdminStateModel::clear($chatId);
+                return;
+            }
+
+            // ✅ Balans qo‘shish
+            UserModel::addBalance($userTelegramId, $amount);
+
+            // 👤 Userga xabar
+            $telegram->sendMessage([
+                'chat_id' => $userTelegramId,
+                'text' => "✅ Balansingiz oshirildi\n💰 +{$amount} UZS"
+            ]);
+
+            // 👮 Adminga tasdiq
             $telegram->sendMessage([
                 'chat_id' => $chatId,
-                'text' => '📤 Kitob yuklash (keyin qilinadi)'
+                'text' => "✅ Balans muvaffaqiyatli qo‘shildi\n👤 User: {$userTelegramId}\n💰 Summa: {$amount} UZS",
+                'reply_markup' => AdminMenu::main()
             ]);
+
+            // 🧹 State tozalash
+            AdminStateModel::clear($chatId);
+
+            // MUHIM: default menu qayta chiqmasligi uchun
+            return;
         }
 
-        if ($data === 'admin_books') {
-            $telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => '📚 Kitoblar ro‘yxati (keyin qilinadi)'
-            ]);
+        /* ===============================
+           KEYINCHALIK BOSHQA ADMIN FLOWLAR
+        =============================== */
+        if ($state && $state['step'] === 'waiting_title' && $text) {
+            // Bu yerga keyin kitob upload logikasi yoziladi
+            return;
         }
+
+        /* ===============================
+           DEFAULT ADMIN PANEL
+        =============================== */
+        $telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => "👮 Admin panelga xush kelibsiz",
+            'reply_markup' => AdminMenu::main()
+        ]);
     }
 }

@@ -11,15 +11,15 @@ class UserMenu
             ->setResizeKeyboard(true)
             ->setOneTimeKeyboard(false)
             ->row([
-                Keyboard::button(['text' => '💰 Balans']),
-                Keyboard::button(['text' => '💳 To\'lov'])
+                Keyboard::button(['text' => '💰 Balansni ko‘rish']),
+                Keyboard::button(['text' => '💳 To‘lov'])
             ])
             ->row([
                 Keyboard::button(['text' => '🔍 Qidirish'])
             ])
             ->row([
                 Keyboard::button(['text' => '📚 Mening kitoblarim']),
-                Keyboard::button(['text' => '⚙️ Sozlamalar'])
+                Keyboard::button(['text' => '👥 Referal'])
             ]);
     }
 }
