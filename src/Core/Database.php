@@ -15,8 +15,13 @@ class Database
             $config = require __DIR__ . '/../config.php';
             $db = $config['db'];
 
-            // Socket orqali ulanish
-            $dsn = "mysql:unix_socket={$db['socket']};dbname={$db['dbname']};charset={$db['charset']}";
+            if (!empty($db['socket'])) {
+                // LOCAL (socket)
+                $dsn = "mysql:unix_socket={$db['socket']};dbname={$db['dbname']};charset={$db['charset']}";
+            } else {
+                // SERVER (host)
+                $dsn = "mysql:host={$db['host']};port={$db['port']};dbname={$db['dbname']};charset={$db['charset']}";
+            }
 
             try {
                 self::$pdo = new PDO($dsn, $db['user'], $db['pass'], [
